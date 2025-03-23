@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dunua6s3lylvp"]
+[gd_scene load_steps=9 format=3 uid="uid://dunua6s3lylvp"]
 
+[ext_resource type="Script" path="res://scripts/cow.gd" id="1_lxt1c"]
 [ext_resource type="Texture2D" uid="uid://dris0m4ui1iqn" path="res://assets/sprites/Characters/Free Cow Sprites.png" id="1_udcp3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xkgwo"]
@@ -60,6 +61,7 @@ animations = [{
 }]
 
 [node name="cow" type="Node2D"]
+script = ExtResource("1_lxt1c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dunua6s3lylvp"]
+[gd_scene load_steps=14 format=3 uid="uid://dunua6s3lylvp"]
 
 [ext_resource type="Script" path="res://scripts/cow.gd" id="1_lxt1c"]
 [ext_resource type="Texture2D" uid="uid://dris0m4ui1iqn" path="res://assets/sprites/Characters/Free Cow Sprites.png" id="1_udcp3"]
+[ext_resource type="PackedScene" uid="uid://r6v1xil652mt" path="res://scenes/interaction_area.tscn" id="3_vp48t"]
+[ext_resource type="FontFile" uid="uid://bqt1douqwtg8y" path="res://assets/fonts/PixelOperator8.ttf" id="4_adbb4"]
+[ext_resource type="FontFile" uid="uid://bp0qoercvrfgg" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="4_xu64v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xkgwo"]
 atlas = ExtResource("1_udcp3")
@@ -60,13 +63,60 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="cow" type="Node2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kwsxk"]
+radius = 12.0416
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kq43m"]
+radius = 55.0091
+
+[node name="cow" type="Area2D"]
+collision_layer = 9
+collision_mask = 9
 script = ExtResource("1_lxt1c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -13)
+position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_xtvfr")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.460398
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_kwsxk")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_vp48t")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_kq43m")
+
+[node name="moo" type="Label" parent="InteractionArea"]
+visible = false
+z_index = 30
+texture_filter = 1
+offset_left = -38.0
+offset_top = -30.0
+offset_right = 136.0
+offset_bottom = -7.0
+theme_override_fonts/font = ExtResource("4_xu64v")
+theme_override_font_sizes/font_size = 8
+text = "moo, bitch"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="InteractionArea"]
+texture_filter = 1
+offset_left = -49.0
+offset_top = -62.0
+offset_right = 56.0
+offset_bottom = -39.0
+theme_override_fonts/font = ExtResource("4_adbb4")
+theme_override_font_sizes/font_size = 8
+text = "'E' To Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="." to="." method="_on_cow_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
